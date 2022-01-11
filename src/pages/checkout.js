@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 import { selectItems, selectTotal } from "../slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct/checkout-product.component";
 import Currency from "react-currency-formatter";
-import { useSession } from "next-auth/client";
+import { selectUser } from "../slices/userSlice";
 
 const Checkout = () => {
 
     const total = useSelector(selectTotal);
     const items = useSelector(selectItems);
-    const [session] = useSession();
+    const user = useSelector(selectUser);
 
     return (
         <div className='bg-gray-100'>
@@ -56,9 +56,9 @@ const Checkout = () => {
                                         <Currency quantity={total} currency="GBP" />
                                     </span>
                                 </h2>
-                                <button className={`button mt-2 ${!session && 'from-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor-not-allowed'}`}>
+                                <button className={`button mt-2 ${!user && 'from-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor-not-allowed'}`}>
                                     {
-                                        !session ? "Sign to Checkout" : "Proceed to Checkout"
+                                        !user ? "Sign to Checkout" : "Proceed to Checkout"
                                     }
                                 </button>
                             </>

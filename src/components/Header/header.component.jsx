@@ -1,15 +1,19 @@
 import Image from 'next/image';
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
-import { signIn, signOut, useSession } from 'next-auth/client';
+//import { signIn, signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectItems } from '../../slices/basketSlice';
+import { auth, signInWithGoogle } from '../../base/firebase';
+import { selectUser } from '../../slices/userSlice';
 
 const Header = () => {
 
-    const [session] = useSession();
+    //const [session] = useSession();
     const router = useRouter();
     const items = useSelector(selectItems);
+    const user = useSelector(selectUser);
+    //console.log(user.name);
 
     return (
         <header>
@@ -34,10 +38,10 @@ const Header = () => {
                 </div>
 
                 <div className='text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-                    <div onClick={!session ? signIn : signOut} className='link'>
+                    <div onClick={() => !user ? signInWithGoogle() : auth.signOut()} className='link'>
                         <p>
                             {
-                                session ? `Hello, ${session.user.name}` : 'Hello, Sign in'
+                                user ? `Hello, ${user.name}` : 'Hello, Sign in'
                             }
                         </p>
                         <p className='font-extrabold md:text-sm'>Account & Lists</p>
@@ -74,7 +78,7 @@ const Header = () => {
                 <p className='link hidden lg:inline-flex'>Shopper to Toolkit</p>
                 <p className='link hidden lg:inline-flex'>Health & Personal Care</p>
             </div>
-        </header>
+        </header >
     )
 }
 
