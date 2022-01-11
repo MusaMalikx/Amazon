@@ -11,6 +11,7 @@ export default function Home({products}) {
     <div className='bg-gray-100'>
       <Head>
         <title>Amazon</title>
+        <link rel="icon" href="/ama.png" />
       </Head>
 
       <Header />
