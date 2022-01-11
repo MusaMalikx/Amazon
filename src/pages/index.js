@@ -12,6 +12,8 @@ export default function Home({products}) {
   //console.log(products)
   const dispatch = useDispatch();
 
+  console.log(auth);
+
   useEffect(()=>{
     const subscription = auth.onAuthStateChanged(userAuth => {
       if (userAuth) {
